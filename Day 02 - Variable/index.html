@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variable</title>
+</head>
+<body>
+    
+    <script>
+
+        var animal; //variable is undefined
+        animal = 'fish';
+        //console.log(animal); // Output: fish
+
+        // var can have multiple variables
+        var school = 'ANT';
+        var school = 'Training'; // Value is the last variable
+        //console.log(school); // Output: ANT
+
+        function myVar() {
+            var i = 5;
+            if (i == 5) {
+                var j = 10;
+                // console.log(j);
+            }
+        }
+        //myVar(); // Output: 10
+
+        // let can not double name variable
+        let phone = 'Iphone';
+        //let phone // error can not use duplicate variable name
+
+        function myLet() {
+            let i = 5;
+            if (i == 5) {
+                let j = 10;
+                console.log(j);
+            }
+        }
+        myLet(); // Output: 10
+
+        const door = 10; // must assign value during declare
+        // door = 20; // error can not change the value of const variable
+
+        let a, b, c;
+
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
