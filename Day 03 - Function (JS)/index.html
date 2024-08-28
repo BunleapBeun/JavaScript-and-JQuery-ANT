@@ -9,7 +9,8 @@
 
     <body>
 
-        <button onclick="alertMSG()">Click me</button>
+        <button onclick="alertMSG()">Click Me</button>
+        <button id="btn">Click Again</button>
 
         <script>
 
@@ -32,9 +33,16 @@
             // self invoking function or IIFE function, can not access outside and inside
             // this function create it's own function and call it self for work.
             // it use for it's own block can not call for in other block
-            (function(){
+            (function () {
                 // body function IIFE or self invoke function (it's standard code and it have security.)
                 console.log('In IIFE');
+            })();
+
+            // for call out of block
+            (function () {
+                document.getElementById('btn').onclick = function () {
+                    alert('Click Again');
+                }
             })();
 
         </script>

@@ -16,3 +16,11 @@ function funName() {
 funName();
 
 // self-invoking function: បង្កើត function​ ដោយខ្លួនវា ហៅប្រើដោយផ្ទាល់
+
+for call selector in HTML to JS, we use document.getElement..
+
+JS have 2 type function: user defined functoin (create by yourself or dev), build in function (function that have in JS already)
+### return
+return use for give value to the function and close the function and can use the value that return to calculate....\
+
+##
