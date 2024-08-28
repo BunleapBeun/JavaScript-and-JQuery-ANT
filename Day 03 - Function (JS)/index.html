@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Function</title>
+    </head>
+
+    <body>
+
+        <button onclick="alertMSG()">Click me</button>
+
+        <script>
+
+            function displayText() {
+                //body function
+                console.log('Hello JS.');
+            }
+            displayText();
+
+            //Anonymous function
+            let displayMSG = function () {
+                console.log('Style create function.')
+            }
+            displayMSG();
+
+            function alertMSG() {
+                alert('Hello world.');
+            }
+
+            // self invoking function or IIFE function, can not access outside and inside
+            // this function create it's own function and call it self for work.
+            // it use for it's own block can not call for in other block
+            (function(){
+                // body function IIFE or self invoke function (it's standard code and it have security.)
+                console.log('In IIFE');
+            })();
+
+        </script>
+    </body>
+
+</html>
