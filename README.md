@@ -1,4 +1,4 @@
-<p style="text-align: center;">
+<div align="center">
 # JavaScript Lesson
-</p>
+</div>
 
