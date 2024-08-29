@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <style>
+            body {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                overflow: hidden;
+            }
+
+            table {
+                width: 200px;
+                height: 150px;
+            }
+
+            button {
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
+            #result {
+                width: 100%;
+                height: 30px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Simple Calculator</h1>
+        <table border="1" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="4">
+                    <div id="result"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><button onclick="sum()">+</button></td>
+                <td><button onclick="sub()">-</button></td>
+                <td><button onclick="mulNum()">x</button></td>
+                <td><button onclick="divide()">/</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="six()">6</button></td>
+                <td><button onclick="seven()">7</button></td>
+                <td><button onclick="eight()">8</button></td>
+                <td><button onclick="nine()">9</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="two()">2</button></td>
+                <td><button onclick="three()">3</button></td>
+                <td><button onclick="four()">4</button></td>
+                <td><button onclick="five()">5</button></td>
+            </tr>
+            <tr>
+                <td><button onclick="one()">1</button></td>
+                <td><button onclick="zero()">0</button></td>
+                <td><button onclick="equal()">=</button></td>
+                <td><button onclick="clearResult()">C</button></td>
+            </tr>
+        </table>
+
+        <script>
+
+            let result = document.getElementById('result');
+
+            function sum() {
+                result.innerText += "+";
+                let getVal = result.innerText;
+                console.log(eval(getVal));
+                result.eval(getVal);
+            }
+
+            function sub() {
+                result.innerText += "-";
+            }
+
+            function mulNum() {
+                result.innerText += "*";
+            }
+
+            function divide() {
+                result.innerText += "/";
+            }
+
+            function equal() {
+                let getVal = result.innerHTML;
+                result.innerText = eval(getVal);
+            }
+
+            function clearResult() {
+                result.innerText = " ";
+            }
+
+            function one() {
+                result.innerText += "1";
+                result.evaluate(one);
+            }
+
+            function two() {
+                result.innerText += "2";
+            }
+
+            function three() {
+                result.innerText += "3";
+            }
+
+            function four() {
+                result.innerText += "4";
+            }
+
+            function five() {
+                result.innerText += "5";
+            }
+
+            function six() {
+                result.innerText += "6";
+            }
+
+            function seven() {
+                result.innerText += "7";
+            }
+
+            function eight() {
+                result.innerText += "8";
+            }
+
+            function nine() {
+                result.innerText += "9";
+            }
+
+            function zero() {
+                result.innerText += "0";
+            }
+
+
+        </script>
+
+
+    </body>
+
+</html>
