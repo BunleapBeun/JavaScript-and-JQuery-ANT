@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JS . Operator</title>
+    </head>
+
+    <body>
+
+        <p>Addition: <span id="increaseNum">0</span></p>
+        <button onclick="add()">Add</button>
+        <p>Subtraction: <span id="decreaseNum">100</span></p>
+        <button onclick="sub();">Sub</button>
+
+        <script>
+            let increaseNum = 0;
+            let decreaseNum = 100;
+
+            function add() {
+                increaseNum++;
+                document.getElementById('increaseNum').innerText = increaseNum;
+            }
+
+            function sub() {
+                decreaseNum--;
+                document.getElementById('decreaseNum').innerText = decreaseNum;
+            }
+        </script>
+
+        <script>
+            // additional sign
+            let addition = 2 + 5;
+            // subtract sign
+            let sub = 5 - 2;
+
+            // console.log(addition);
+            // console.log(sub);
+
+            // increment number
+            // let x = 4;
+            // let j = ++x;
+            // console.log(j);
+            // console.log(x);
+            // x++;
+            // console.log(x);
+
+            // (==) & (===)
+            let x = (2 == '2'); // check only value without datatype
+            let y = (2 === '2'); // check both value and datatype
+
+            // console.log(x);
+            // console.log(y);
+
+            let z = (5 != 5); // false
+            let a = (2 < 4); // true
+            let b = (4 <= 4) // true
+
+            let c = (5 > 10); // false
+            let d = (5 >= 5); // true
+
+            // console.log(d);
+
+            // logical operator ឈ្នាប់
+            // let i = (2 == 2 && 4 == 4 && 5 != 5);
+            // let j = (2 < 2 || 5 != 5 || 10 < 10);
+            // let k = (!2 == 2);
+
+            // console.log(i);
+            // console.log(j);
+            // console.log(k);
+            // console.log('Hello World!');
+
+            let i = 5;
+            // i += 1;
+            // i -= 5;
+
+            console.log(i);
+
+        </script>
+    </body>
+
+</html>
