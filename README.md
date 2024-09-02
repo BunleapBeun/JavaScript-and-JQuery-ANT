@@ -23,4 +23,7 @@ JS have 2 type function: user defined functoin (create by yourself or dev), buil
 ### return
 return use for give value to the function and close the function and can use the value that return to calculate....\
 
+
+### function eval
 ##
+eval can let string calculate
