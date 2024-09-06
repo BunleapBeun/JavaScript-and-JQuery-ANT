@@ -27,3 +27,9 @@ return use for give value to the function and close the function and can use the
 ### function eval
 ##
 eval can let string calculate
+
+if 
+if else
+switch case
+loop
+ternary operator
