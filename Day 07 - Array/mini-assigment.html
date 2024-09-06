@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mini Assignment</title>
+        <link rel="stylesheet" href="../asset/plugins/bootstrap/css/bootstrap.css">
+    </head>
+
+    <body>
+        <main>
+            <section class="creation-hotel" id="hotel-create">
+                <div class="container my-5">
+                    <label for="" class="fs-5 mb-2 fw-bold">Enter Number of floor: </label>
+                    <input type="text" class="form-control mb-3" id="floor">
+                    <div>
+                        <label for="" class="fs-5 mb-2 fw-bold">Enter Number of room each floor: </label>
+                        <input type="text" class="form-control" id="room">
+                    </div>
+                    <button class="btn bg-primary text-white mt-3 fs-6" onclick="create()">Create</button>
+                </div>
+            </section>
+            <section id="hotel-info" style="display: none;">
+                <div class="container">
+                    <h3 class="mb-3 fs-1 fw-bold text-center border-bottom py-3" id="title"></h3>
+                    <div class="w-100 d-flex justify-content-center">
+                        <button class="btn bg-primary fs-6 text-white" onclick="checkInBtn()">Check in</button>
+                        <button class="btn bg-primary fs-6 text-white ms-3" onclick="checkOutBtn()">Check out</button>
+                    </div>
+                    <div id="checkIn">
+                        <h3 class="my-4 text-start border-bottom py-3 fs-1 fw-bold">Check In</h3>
+                        <label for="" class="fs-5 fw-bold mb-2">Enter floor number: </label>
+                        <input type="text" class="form-control mb-3">
+                        <label for="" class="fs-5 fw-bold mb-2">Enter room number: </label>
+                        <input type="text" class="form-control mb-3">
+                        <label for="" class="fs-5 fw-bold mb-2">Enter guest name: </label>
+                        <input type="text" class="form-control">
+                        <div class="btn bg-primary fs-6 text-white mt-3">Save</div>
+                    </div>
+                    <div id="checkOut" style="display: none;">
+                        <h3 class="my-4 text-start border-bottom py-3 fs-1 fw-bold">Check Out</h3>
+                        <label for="" class="fs-5 fw-bold mb-2">Enter floor number: </label>
+                        <input type="text" class="form-control mb-3">
+                        <label for="" class="fs-5 fw-bold mb-2">Enter room number: </label>
+                        <input type="text" class="form-control">
+                        <div class="btn bg-primary fs-6 text-white mt-3">Save</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            function create() {
+                let room = document.getElementById('room').value;
+                let floor = document.getElementById('floor').value;
+                alert(`Hotel sucessfully setup with ${floor} floor and ${room} room`);
+                document.getElementById('hotel-create').style.display = 'none';
+                document.getElementById('hotel-info').style.display = 'block';
+                document.getElementById('title').innerHTML = `Your Hotel have ${floor} and ${room} room`
+                console.log(document.getElementById('title'));
+            }
+            function checkInBtn() {
+                document.getElementById('checkIn').style.display = 'block';
+                document.getElementById('checkOut').style.display = 'none';
+            }
+            function checkOutBtn() {
+                document.getElementById('checkOut').style.display = 'block';
+                document.getElementById('checkIn').style.display = 'none';
+            }
+        </script>
+    </body>
+
+</html>
