@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Object</title>
+</head>
+<body>
+    
+    <p>Hello World.</p>
+
+    <script>
+
+        // let obj = {}; // object literal
+        // let myObj = new Object(); // object constructor
+        // console.log(obj);
+        // // console.log(myObj);
+
+        // obj.name = 'Jerry';
+        // obj.age = 18;
+        // obj.display = function() {
+        //     console.log('This is object');
+        // }
+
+        let obj = {
+            name: 'Jerry',
+            age: 18,
+            display: function() {
+                console.log('This is object');
+            }
+        }
+
+        console.log(obj);
+        console.log(obj.name);
+        console.log(obj.age);
+        obj.display();
+
+        console.log(obj['name', 'age', 'display()']);
+
+
+    </script>
+
+</body>
+</html>

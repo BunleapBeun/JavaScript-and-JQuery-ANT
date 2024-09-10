@@ -6,6 +6,11 @@ body {
     align-items: center;
     height: 100vh;
 }
+
+.mr-0 {
+    margin-right: 0 !important;
+}
+
 .add-fruit{
     display: flex;
 }
