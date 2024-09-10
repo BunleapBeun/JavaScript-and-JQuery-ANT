@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="card">
+        
+    </div>
+
+    <script>
+        let card = document.getElementById("card");
+        let p = document.createElement('p');
+        p.className = "text";
+        let span = document.createElement('span');
+        span.innerHTML = " This is a paragraph";
+        p.innerHTML = "Hello World";
+        p.appendChild(span);
+        card.appendChild(p);
+        console.log(card);
+    </script>
+</body>
+</html>
