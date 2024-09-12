@@ -28,6 +28,20 @@
                         <button class="btn bg-primary fs-6 text-white" onclick="checkInBtn()">Check in</button>
                         <button class="btn bg-primary fs-6 text-white ms-3" onclick="checkOutBtn()">Check out</button>
                     </div>
+                    <!-- Table to show the input data -->
+                    <div id="hotel-table" class="mt-4">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr id="table-header">
+                                    <th>Floor</th>
+                                    <!-- Columns for rooms will be dynamically added here -->
+                                </tr>
+                            </thead>
+                            <tbody id="hotel-table-body">
+                                <!-- Data rows will be inserted here -->
+                            </tbody>
+                        </table>
+                    </div>
                     <div id="checkIn">
                         <h3 class="my-4 text-start border-bottom py-3 fs-1 fw-bold">Check In</h3>
                         <label for="" class="fs-5 fw-bold mb-2">Enter floor number: </label>
@@ -51,18 +65,55 @@
         </main>
         <script>
             function create() {
-                let room = document.getElementById('room').value;
-                let floor = document.getElementById('floor').value;
-                alert(`Hotel sucessfully setup with ${floor} floor and ${room} room`);
+                let room = parseInt(document.getElementById('room').value);
+                let floor = parseInt(document.getElementById('floor').value);
+
+                // Validate inputs
+                if (isNaN(room) || isNaN(floor) || room <= 0 || floor <= 0) {
+                    alert("Please enter valid numbers for floors and rooms.");
+                    return;
+                }
+
+                // Alert and update the title
+                alert(`Hotel successfully set up with ${floor} floor(s) and ${room} room(s) per floor.`);
                 document.getElementById('hotel-create').style.display = 'none';
                 document.getElementById('hotel-info').style.display = 'block';
-                document.getElementById('title').innerHTML = `Your Hotel have ${floor} and ${room} room`
-                console.log(document.getElementById('title'));
+                document.getElementById('title').innerHTML = `Your Hotel has ${floor} floor(s) and ${room} room(s) per floor.`;
+
+                // Update table header with room columns
+                const tableHeader = document.getElementById('table-header');
+                const existingHeaders = tableHeader.querySelectorAll('th');
+                for (let i = existingHeaders.length - 1; i > 0; i--) {
+                    tableHeader.removeChild(existingHeaders[i]);
+                }
+                for (let i = 1; i <= room; i++) {
+                    const th = document.createElement('th');
+                    th.textContent = `Room ${i}`;
+                    tableHeader.appendChild(th);
+                }
+
+                // Insert data into the table
+                const tableBody = document.getElementById('hotel-table-body');
+                tableBody.innerHTML = ''; // Clear existing rows
+                for (let i = 1; i <= floor; i++) {
+                    const row = document.createElement('tr');
+                    const floorCell = document.createElement('td');
+                    floorCell.textContent = `Floor ${i}`;
+                    row.appendChild(floorCell);
+                    for (let j = 1; j <= room; j++) {
+                        const cell = document.createElement('td');
+                        cell.textContent = 'null'; // Indicates room is empty
+                        row.appendChild(cell);
+                    }
+                    tableBody.appendChild(row);
+                }
             }
+
             function checkInBtn() {
                 document.getElementById('checkIn').style.display = 'block';
                 document.getElementById('checkOut').style.display = 'none';
             }
+
             function checkOutBtn() {
                 document.getElementById('checkOut').style.display = 'block';
                 document.getElementById('checkIn').style.display = 'none';
