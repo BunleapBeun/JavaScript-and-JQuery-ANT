@@ -5,7 +5,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Mini Assignment</title>
-        <link rel="stylesheet" href="../asset/plugins/bootstrap/css/bootstrap.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     </head>
 
     <body>
@@ -30,7 +31,7 @@
                     </div>
                     <!-- Table to show the input data -->
                     <div id="hotel-table" class="mt-4">
-                        <table class="table table-striped">
+                        <table class="table table-striped fs-5  "> <!-- Added fs-5 class here -->
                             <thead>
                                 <tr id="table-header">
                                     <th>Floor</th>
@@ -42,28 +43,38 @@
                             </tbody>
                         </table>
                     </div>
-                    <div id="checkIn">
+                    <div id="checkIn" style="display: none;">
                         <h3 class="my-4 text-start border-bottom py-3 fs-1 fw-bold">Check In</h3>
-                        <label for="" class="fs-5 fw-bold mb-2">Enter floor number: </label>
-                        <input type="text" class="form-control mb-3">
-                        <label for="" class="fs-5 fw-bold mb-2">Enter room number: </label>
-                        <input type="text" class="form-control mb-3">
-                        <label for="" class="fs-5 fw-bold mb-2">Enter guest name: </label>
-                        <input type="text" class="form-control">
-                        <div class="btn bg-primary fs-6 text-white mt-3">Save</div>
+                        <label for="checkInFloor" class="fs-5 fw-bold mb-2">Enter floor number: </label>
+                        <input type="text" class="form-control mb-3" id="checkInFloor">
+                        <label for="checkInRoom" class="fs-5 fw-bold mb-2">Enter room number: </label>
+                        <input type="text" class="form-control mb-3" id="checkInRoom">
+                        <label for="guestName" class="fs-5 fw-bold mb-2">Enter guest name: </label>
+                        <input type="text" class="form-control" id="guestName">
+                        <div class="btn bg-primary fs-6 text-white mt-3" onclick="checkIn()">Save</div>
                     </div>
                     <div id="checkOut" style="display: none;">
                         <h3 class="my-4 text-start border-bottom py-3 fs-1 fw-bold">Check Out</h3>
-                        <label for="" class="fs-5 fw-bold mb-2">Enter floor number: </label>
-                        <input type="text" class="form-control mb-3">
-                        <label for="" class="fs-5 fw-bold mb-2">Enter room number: </label>
-                        <input type="text" class="form-control">
-                        <div class="btn bg-primary fs-6 text-white mt-3">Save</div>
+                        <label for="checkOutFloor" class="fs-5 fw-bold mb-2">Enter floor number: </label>
+                        <input type="text" class="form-control mb-3" id="checkOutFloor">
+                        <label for="checkOutRoom" class="fs-5 fw-bold mb-2">Enter room number: </label>
+                        <input type="text" class="form-control" id="checkOutRoom">
+                        <div class="btn bg-primary fs-6 text-white mt-3" onclick="checkOut()">Save</div>
                     </div>
                 </div>
             </section>
         </main>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
         <script>
+            let hotelData = {
+                floors: [],
+                numFloors: 0,
+                numRooms: 0
+            };
+
             function create() {
                 let room = parseInt(document.getElementById('room').value);
                 let floor = parseInt(document.getElementById('floor').value);
@@ -74,11 +85,24 @@
                     return;
                 }
 
+                hotelData.numFloors = floor;
+                hotelData.numRooms = room;
+                // Initialize floors with empty room arrays
+                hotelData.floors = [];
+                for (let i = 0; i < floor; i++) {
+                    // Initialize each floor with rooms set to 'null'
+                    let rooms = [];
+                    for (let j = 0; j < room; j++) {
+                        rooms.push('null');
+                    }
+                    hotelData.floors.push(rooms);
+                }
+
                 // Alert and update the title
-                alert(`Hotel successfully set up with ${floor} floor(s) and ${room} room(s) per floor.`);
+                alert(`Hotel successfully set up with ${floor} Floor and ${room} Rooms`);
                 document.getElementById('hotel-create').style.display = 'none';
                 document.getElementById('hotel-info').style.display = 'block';
-                document.getElementById('title').innerHTML = `Your Hotel has ${floor} floor(s) and ${room} room(s) per floor.`;
+                document.getElementById('title').innerHTML = `Hotel successfully setup with ${floor} Floor and ${room} Rooms`;
 
                 // Update table header with room columns
                 const tableHeader = document.getElementById('table-header');
@@ -95,14 +119,79 @@
                 // Insert data into the table
                 const tableBody = document.getElementById('hotel-table-body');
                 tableBody.innerHTML = ''; // Clear existing rows
-                for (let i = 1; i <= floor; i++) {
+                for (let i = 0; i < floor; i++) {
                     const row = document.createElement('tr');
                     const floorCell = document.createElement('td');
-                    floorCell.textContent = `Floor ${i}`;
+                    floorCell.textContent = `Floor ${i + 1}`;
                     row.appendChild(floorCell);
-                    for (let j = 1; j <= room; j++) {
+                    for (let j = 0; j < room; j++) {
                         const cell = document.createElement('td');
-                        cell.textContent = 'null'; // Indicates room is empty
+                        cell.textContent = hotelData.floors[i][j];
+                        row.appendChild(cell);
+                    }
+                    tableBody.appendChild(row);
+                }
+            }
+
+            function checkIn() {
+                const floor = parseInt(document.getElementById('checkInFloor').value) - 1;
+                const room = parseInt(document.getElementById('checkInRoom').value) - 1;
+                const guestName = document.getElementById('guestName').value.trim();
+
+                // Validate inputs
+                if (isNaN(floor) || isNaN(room) || floor < 0 || room < 0 || floor >= hotelData.numFloors || room >= hotelData.numRooms || guestName === '') {
+                    alert("Please enter valid floor and room numbers and provide a guest name.");
+                    return;
+                }
+
+                // Check if room is already occupied
+                if (hotelData.floors[floor][room] !== 'null') {
+                    alert("This room is already occupied.");
+                    return;
+                }
+
+                // Assign guest to the room and update table
+                hotelData.floors[floor][room] = guestName;
+                updateTable();
+                clearCheckInFields();
+                alert("Successfully Check In."); // Alert after saving
+            }
+
+            function checkOut() {
+                const floor = parseInt(document.getElementById('checkOutFloor').value) - 1;
+                const room = parseInt(document.getElementById('checkOutRoom').value) - 1;
+
+                // Validate inputs
+                if (isNaN(floor) || isNaN(room) || floor < 0 || room < 0 || floor >= hotelData.numFloors || room >= hotelData.numRooms) {
+                    alert("Please enter valid floor and room numbers.");
+                    return;
+                }
+
+                // Check if room is empty
+                if (hotelData.floors[floor][room] === 'null') {
+                    alert("This room is already empty.");
+                    return;
+                }
+
+                // Clear guest from the room and update table
+                hotelData.floors[floor][room] = 'null';
+                updateTable();
+                clearCheckOutFields();
+                alert("Successfully Check Out."); // Alert after saving
+            }
+
+            function updateTable() {
+                const tableBody = document.getElementById('hotel-table-body');
+                tableBody.innerHTML = ''; // Clear existing rows
+
+                for (let i = 0; i < hotelData.numFloors; i++) {
+                    const row = document.createElement('tr');
+                    const floorCell = document.createElement('td');
+                    floorCell.textContent = `Floor ${i + 1}`;
+                    row.appendChild(floorCell);
+                    for (let j = 0; j < hotelData.numRooms; j++) {
+                        const cell = document.createElement('td');
+                        cell.textContent = hotelData.floors[i][j];
                         row.appendChild(cell);
                     }
                     tableBody.appendChild(row);
@@ -118,7 +207,19 @@
                 document.getElementById('checkOut').style.display = 'block';
                 document.getElementById('checkIn').style.display = 'none';
             }
+
+            function clearCheckInFields() {
+                document.getElementById('checkInFloor').value = '';
+                document.getElementById('checkInRoom').value = '';
+                document.getElementById('guestName').value = '';
+            }
+
+            function clearCheckOutFields() {
+                document.getElementById('checkOutFloor').value = '';
+                document.getElementById('checkOutRoom').value = '';
+            }
         </script>
+
     </body>
 
 </html>
