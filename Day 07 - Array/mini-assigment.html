@@ -13,6 +13,7 @@
         <main>
             <section class="creation-hotel" id="hotel-create">
                 <div class="container my-5">
+                    <h1 class="mb-3 text-center fw-bold">Create Hotel</h1>
                     <label for="" class="fs-5 mb-2 fw-bold">Enter Number of floor: </label>
                     <input type="text" class="form-control mb-3" id="floor">
                     <div>
@@ -29,17 +30,14 @@
                         <button class="btn bg-primary fs-6 text-white" onclick="checkInBtn()">Check in</button>
                         <button class="btn bg-primary fs-6 text-white ms-3" onclick="checkOutBtn()">Check out</button>
                     </div>
-                    <!-- Table to show the input data -->
                     <div id="hotel-table" class="mt-4">
-                        <table class="table table-striped fs-5  "> <!-- Added fs-5 class here -->
+                        <table class="table table-striped fs-5  ">
                             <thead>
                                 <tr id="table-header">
                                     <th>Floor</th>
-                                    <!-- Columns for rooms will be dynamically added here -->
                                 </tr>
                             </thead>
                             <tbody id="hotel-table-body">
-                                <!-- Data rows will be inserted here -->
                             </tbody>
                         </table>
                     </div>
@@ -79,7 +77,6 @@
                 let room = parseInt(document.getElementById('room').value);
                 let floor = parseInt(document.getElementById('floor').value);
 
-                // Validate inputs
                 if (isNaN(room) || isNaN(floor) || room <= 0 || floor <= 0) {
                     alert("Please enter valid numbers for floors and rooms.");
                     return;
@@ -87,10 +84,8 @@
 
                 hotelData.numFloors = floor;
                 hotelData.numRooms = room;
-                // Initialize floors with empty room arrays
                 hotelData.floors = [];
                 for (let i = 0; i < floor; i++) {
-                    // Initialize each floor with rooms set to 'null'
                     let rooms = [];
                     for (let j = 0; j < room; j++) {
                         rooms.push('null');
@@ -98,13 +93,11 @@
                     hotelData.floors.push(rooms);
                 }
 
-                // Alert and update the title
                 alert(`Hotel successfully set up with ${floor} Floor and ${room} Rooms`);
                 document.getElementById('hotel-create').style.display = 'none';
                 document.getElementById('hotel-info').style.display = 'block';
                 document.getElementById('title').innerHTML = `Hotel successfully setup with ${floor} Floor and ${room} Rooms`;
 
-                // Update table header with room columns
                 const tableHeader = document.getElementById('table-header');
                 const existingHeaders = tableHeader.querySelectorAll('th');
                 for (let i = existingHeaders.length - 1; i > 0; i--) {
@@ -116,9 +109,8 @@
                     tableHeader.appendChild(th);
                 }
 
-                // Insert data into the table
                 const tableBody = document.getElementById('hotel-table-body');
-                tableBody.innerHTML = ''; // Clear existing rows
+                tableBody.innerHTML = '';
                 for (let i = 0; i < floor; i++) {
                     const row = document.createElement('tr');
                     const floorCell = document.createElement('td');
@@ -138,51 +130,44 @@
                 const room = parseInt(document.getElementById('checkInRoom').value) - 1;
                 const guestName = document.getElementById('guestName').value.trim();
 
-                // Validate inputs
                 if (isNaN(floor) || isNaN(room) || floor < 0 || room < 0 || floor >= hotelData.numFloors || room >= hotelData.numRooms || guestName === '') {
                     alert("Please enter valid floor and room numbers and provide a guest name.");
                     return;
                 }
-
-                // Check if room is already occupied
                 if (hotelData.floors[floor][room] !== 'null') {
-                    alert("This room is already occupied.");
+                    alert("This room is already Check In.");
                     return;
                 }
 
-                // Assign guest to the room and update table
                 hotelData.floors[floor][room] = guestName;
                 updateTable();
                 clearCheckInFields();
-                alert("Successfully Check In."); // Alert after saving
+                alert("Successfully Check In.");
             }
 
             function checkOut() {
                 const floor = parseInt(document.getElementById('checkOutFloor').value) - 1;
                 const room = parseInt(document.getElementById('checkOutRoom').value) - 1;
 
-                // Validate inputs
                 if (isNaN(floor) || isNaN(room) || floor < 0 || room < 0 || floor >= hotelData.numFloors || room >= hotelData.numRooms) {
                     alert("Please enter valid floor and room numbers.");
                     return;
                 }
 
-                // Check if room is empty
                 if (hotelData.floors[floor][room] === 'null') {
                     alert("This room is already empty.");
                     return;
                 }
 
-                // Clear guest from the room and update table
                 hotelData.floors[floor][room] = 'null';
                 updateTable();
                 clearCheckOutFields();
-                alert("Successfully Check Out."); // Alert after saving
+                alert("Successfully Check Out.");
             }
 
             function updateTable() {
                 const tableBody = document.getElementById('hotel-table-body');
-                tableBody.innerHTML = ''; // Clear existing rows
+                tableBody.innerHTML = '';
 
                 for (let i = 0; i < hotelData.numFloors; i++) {
                     const row = document.createElement('tr');
