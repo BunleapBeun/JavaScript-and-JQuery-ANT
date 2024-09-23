@@ -1,11 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DOM JS</title>
+    </head>
+
+    <body>
+        <p id="result"></p>
+        <p class="text"></p>
+        <p class="text"></p>
+        <p class="text"></p>
+
+        <!-- access with tag name -->
+        <h1></h1>
+        <h1></h1>
+
+        <button id="btn">Click me</button>
+        <script>
+            console.log(document.getElementById('result')); // for watch value it have or not
+            console.log(document.getElementsByClassName('text')); // for watch value it have or not
+
+            let colection = document.getElementsByClassName('text');
+            for (i = 0; i < colection.length; i++) {
+                console.log(colection[i]);
+                colection[i].innerHTML = 'Hello';
+            }
+
+            //access with tag name
+            console.log(document.getElementsByTagName('h1'));
+
+            // document.getElementById('result').innerText = "<h1>Tiger</h1>";
+            // document.getElementById('result').innerHTML = "<h1>Tiger</h1>";
+
+            document.getElementById('btn').disabled = true; // can use with true and fasle
+            // document.getElementById('btn').setAttribute('disabled', true); // this syntax only with true, when you use false it's not working
+            // document.getElementById('result').style.backgroundColor = 'blue'; // give style html element
+
+            console.log(document.querySelector('#result'));
+            
+        </script>
+    </body>
+
 </html>

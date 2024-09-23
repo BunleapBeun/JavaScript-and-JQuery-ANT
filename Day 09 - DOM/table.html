@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Table JS</title>
+    </head>
+
+    <body>
+
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <tr>
+                    <td>John Wick</td>
+                    <td>30</td>
+                    <td>Male</td>
+                    <td><button onclick="DeleteItem(this)">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <script>
+            let tbody = document.getElementById('tbody');
+            let row = tbody.insertRow(0);  // create tr
+            let col1 = row.insertCell(0);  // create td
+            let col2 = row.insertCell(1);
+            let col3 = row.insertCell(2);
+            let col4 = row.insertCell(3);
+            console.log(tbody);
+            col1.innerHTML = 'Jame Sbon';
+            col2.innerHTML = '35';
+            col3.innerHTML = 'Male';
+            col4.innerHTML = '<button onclick="DeleteItem(this)">Delete</button>';
+
+
+            function DeleteItem(tr) {
+                // console.log(tr);
+                // console.log(tr.parentElement);
+                // console.log(tr.parentElement.parentElement);
+                let row = tr.parentElement.parentElement;
+                row.remove();
+            }
+        </script>
+
+    </body>
+
+</html>
