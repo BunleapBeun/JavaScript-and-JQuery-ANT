@@ -36,7 +36,6 @@
             .table td,
             .table th {
                 vertical-align: middle;
-                /* Center vertically */
             }
         </style>
     </head>
@@ -44,7 +43,8 @@
     <body>
         <nav class="navbar navbar-expand-lg bg-light border-bottom">
             <div class="container">
-                <a class="navbar-brand fs-2 fw-bold" href="index.html">ANT Training Center</a>
+                <a class="navbar-brand fs-2 fw-bold text-center w-100 text-uppercase" href="index.html">ANT Training
+                    Center</a>
                 <div id="clock" class="ms-auto">
                     <div id="time"></div>
                     <div id="month"></div>
@@ -64,7 +64,7 @@
                                     onblur="validateFullName()">
                             </div>
                             <div class="mb-3">
-                                <label class="fw-bold">Email Id</label>
+                                <label class="fw-bold">Email ID</label>
                                 <div class="validation-error hide" id="emailValidationError">Please enter a valid email
                                     address.</div>
                                 <input type="text" class="form-control" name="email" id="email">
@@ -93,7 +93,7 @@
                             <thead>
                                 <tr>
                                     <th>Full Name</th>
-                                    <th>Email Id</th>
+                                    <th>Email ID</th>
                                     <th>Salary</th>
                                     <th>City</th>
                                     <th>Actions</th>
@@ -105,7 +105,6 @@
                 </div>
             </div>
 
-            <!-- Toast Notification -->
             <div class="toast-container position-fixed top-0 end-0 p-3">
                 <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-header">
@@ -131,54 +130,45 @@
                 const salary = document.getElementById("salary").value.trim();
                 const city = document.getElementById("city").value.trim();
 
-                // Validation
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 let valid = true;
 
-                // Clear previous error messages
                 clearValidationErrors();
 
-                // Full Name validation
                 if (!fullName || /\d/.test(fullName)) {
                     document.getElementById("fullNameValidationError").classList.remove("hide");
                     valid = false;
                 }
 
-                // Email validation
                 if (email && !emailRegex.test(email)) {
                     document.getElementById("emailValidationError").classList.remove("hide");
                     valid = false;
                 }
 
-                // Salary validation (must be a positive number)
                 if (salary && (isNaN(salary) || salary <= 0)) {
                     document.getElementById("salaryValidationError").classList.remove("hide");
                     valid = false;
                 }
 
-                // City validation
                 if (!city || /\d/.test(city)) {
                     document.getElementById("cityValidationError").classList.remove("hide");
                     valid = false;
                 }
 
                 if (!valid) {
-                    return; // Stop if any validation fails
+                    return;
                 }
 
-                // Create a new row or update existing
                 const table = document.getElementById("tbody");
                 if (editRowId !== null) {
-                    // Update existing row
                     const row = table.rows[editRowId];
                     row.cells[0].innerText = fullName;
                     row.cells[1].innerText = email;
                     row.cells[2].innerText = salary;
                     row.cells[3].innerText = city;
-                    editRowId = null; // Reset editRowId
-                    showToast("Employee details updated successfully!");
+                    editRowId = null;
+                    showToast("Updated successfully!");
                 } else {
-                    // Create a new row
                     const newRow = table.insertRow();
                     newRow.innerHTML = `
                     <td>${fullName}</td>
@@ -190,10 +180,9 @@
                         <button class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
                     </td>
                 `;
-                    showToast("Employee added successfully!");
+                    showToast("Added successfully!");
                 }
 
-                // Clear form fields
                 document.querySelector("form").reset();
             });
 
@@ -209,7 +198,7 @@
                 document.getElementById("email").value = row.cells[1].innerText;
                 document.getElementById("salary").value = row.cells[2].innerText;
                 document.getElementById("city").value = row.cells[3].innerText;
-                editRowId = Array.from(row.parentNode.children).indexOf(row); // Get the index of the row
+                editRowId = Array.from(row.parentNode.children).indexOf(row);
             }
 
             function showToast(message) {
@@ -246,26 +235,26 @@
                 }
             }
 
-            // Real-time clock
-            function updateClock() {
-                const now = new Date();
-                let hours = now.getHours();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const seconds = now.getSeconds().toString().padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
+            // // Real-time clock
+            // function updateClock() {
+            //     const now = new Date();
+            //     let hours = now.getHours();
+            //     const minutes = now.getMinutes().toString().padStart(2, '0');
+            //     const seconds = now.getSeconds().toString().padStart(2, '0');
+            //     const ampm = hours >= 12 ? 'PM' : 'AM';
 
-                // Convert to 12-hour format
-                hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
+            //     // Convert to 12-hour format
+            //     hours = hours % 12;
+            //     hours = hours ? hours : 12; // the hour '0' should be '12'
 
-                const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
-                const monthString = `${now.getDate()}-${now.toLocaleString('default', { month: 'short' })}-${now.getFullYear()}`;
-                document.getElementById("time").innerText = timeString;
-                document.getElementById("month").innerText = monthString;
-            }
+            //     const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
+            //     const monthString = `${now.getDate()}-${now.toLocaleString('default', { month: 'short' })}-${now.getFullYear()}`;
+            //     document.getElementById("time").innerText = timeString;
+            //     document.getElementById("month").innerText = monthString;
+            // }
 
-            setInterval(updateClock, 1000);
-            updateClock(); // Initial call to display immediately
+            // setInterval(updateClock, 1000);
+            // updateClock(); // Initial call to display immediately
         </script>
     </body>
 
