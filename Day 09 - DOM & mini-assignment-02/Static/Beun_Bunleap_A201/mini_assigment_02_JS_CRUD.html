@@ -57,7 +57,7 @@
                     <div class="employee-form mb-4">
                         <form autocomplete="on" class="card p-3">
                             <div class="mb-3">
-                                <label class="fw-bold">Full Name*</label>
+                                <label class="fw-bold">Full Name</label>
                                 <div class="validation-error hide" id="fullNameValidationError">This field is required
                                     and should only contain letters.</div>
                                 <input type="text" class="form-control" name="fullName" id="fullName"
@@ -67,13 +67,14 @@
                                 <label class="fw-bold">Email ID</label>
                                 <div class="validation-error hide" id="emailValidationError">Please enter a valid email
                                     address.</div>
-                                <input type="text" class="form-control" name="email" id="email">
+                                <input type="text" class="form-control" name="email" id="email"
+                                    onblur="validateEmail()">
                             </div>
                             <div class="mb-3">
                                 <label class="fw-bold">Salary</label>
                                 <div class="validation-error hide" id="salaryValidationError">Please enter a valid
                                     salary (numbers only).</div>
-                                <input type="number" class="form-control" name="salary" id="salary" min="0">
+                                <input class="form-control" name="salary" id="salary" min="0" onblur="validateSalary()">
                             </div>
                             <div class="mb-3">
                                 <label class="fw-bold">City</label>
@@ -140,12 +141,15 @@
                     valid = false;
                 }
 
-                if (email && !emailRegex.test(email)) {
+                if (!email) {
+                    document.getElementById("emailValidationError").classList.remove("hide");
+                    valid = false;
+                } else if (!emailRegex.test(email)) {
                     document.getElementById("emailValidationError").classList.remove("hide");
                     valid = false;
                 }
 
-                if (salary && (isNaN(salary) || salary <= 0)) {
+                if (!salary || isNaN(salary) || salary <= 0) {
                     document.getElementById("salaryValidationError").classList.remove("hide");
                     valid = false;
                 }
@@ -189,7 +193,7 @@
             function deleteRow(button) {
                 const row = button.parentNode.parentNode;
                 row.parentNode.removeChild(row);
-                showToast("Employee deleted successfully!");
+                showToast("Deleted successfully!");
             }
 
             function editRow(button) {
@@ -235,26 +239,28 @@
                 }
             }
 
-            // // Real-time clock
-            // function updateClock() {
-            //     const now = new Date();
-            //     let hours = now.getHours();
-            //     const minutes = now.getMinutes().toString().padStart(2, '0');
-            //     const seconds = now.getSeconds().toString().padStart(2, '0');
-            //     const ampm = hours >= 12 ? 'PM' : 'AM';
+            function validateEmail() {
+                const email = document.getElementById("email").value;
+                const errorElement = document.getElementById("emailValidationError");
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    errorElement.classList.remove("hide");
+                } else {
+                    errorElement.classList.add("hide");
+                }
+            }
 
-            //     // Convert to 12-hour format
-            //     hours = hours % 12;
-            //     hours = hours ? hours : 12; // the hour '0' should be '12'
+            function validateSalary() {
+                const salary = document.getElementById("salary").value;
+                const errorElement = document.getElementById("salaryValidationError");
+                if (!salary || isNaN(salary) || salary <= 0) {
+                    errorElement.classList.remove("hide");
+                } else {
+                    errorElement.classList.add("hide");
+                }
+            }
 
-            //     const timeString = `${hours}:${minutes}:${seconds} ${ampm}`;
-            //     const monthString = `${now.getDate()}-${now.toLocaleString('default', { month: 'short' })}-${now.getFullYear()}`;
-            //     document.getElementById("time").innerText = timeString;
-            //     document.getElementById("month").innerText = monthString;
-            // }
 
-            // setInterval(updateClock, 1000);
-            // updateClock(); // Initial call to display immediately
         </script>
     </body>
 

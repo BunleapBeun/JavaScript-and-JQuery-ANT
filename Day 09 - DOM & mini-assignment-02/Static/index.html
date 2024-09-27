@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JavaScript CRUD Example Tutorial</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <style>
+            .validation-error {
+                color: red;
+                font-size: 0.9em;
+            }
+
+            .hide {
+                display: none;
+            }
+
+            #clock {
+                text-align: right;
+                color: #333;
+            }
+
+            #month {
+                font-size: 20px;
+                color: #666;
+                font-weight: bold;
+            }
+
+            #time {
+                font-weight: bold;
+                font-size: 30px;
+            }
+
+            .table td,
+            .table th {
+                vertical-align: middle;
+            }
+        </style>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-expand-lg bg-light border-bottom">
+            <div class="container">
+                <a class="navbar-brand fs-2 fw-bold text-center w-100 text-uppercase" href="index.html">ANT Training
+                    Center</a>
+                <div id="clock" class="ms-auto">
+                    <div id="time"></div>
+                    <div id="month"></div>
+                </div>
+            </div>
+        </nav>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-4">
+                    <div class="employee-form mb-4">
+                        <form autocomplete="on" class="card p-3">
+                            <div class="mb-3">
+                                <label class="fw-bold">Full Name</label>
+                                <div class="validation-error hide" id="fullNameValidationError">This field is required
+                                    and should only contain letters.</div>
+                                <input type="text" class="form-control" name="fullName" id="fullName"
+                                    onblur="validateFullName()">
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">Email ID</label>
+                                <div class="validation-error hide" id="emailValidationError">Please enter a valid email
+                                    address.</div>
+                                <input type="text" class="form-control" name="email" id="email"
+                                    onblur="validateEmail()">
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">Salary</label>
+                                <div class="validation-error hide" id="salaryValidationError">Please enter a valid
+                                    salary (numbers only).</div>
+                                <input class="form-control" name="salary" id="salary" min="0" onblur="validateSalary()">
+                            </div>
+                            <div class="mb-3">
+                                <label class="fw-bold">City</label>
+                                <div class="validation-error hide" id="cityValidationError">This field is required and
+                                    should only contain letters.</div>
+                                <input type="text" class="form-control" name="city" id="city" onblur="validateCity()">
+                            </div>
+                            <div class="form-action-buttons">
+                                <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <div class="employees-table card p-3">
+                        <table class="table table-striped" id="employeeList">
+                            <thead>
+                                <tr>
+                                    <th>Full Name</th>
+                                    <th>Email ID</th>
+                                    <th>Salary</th>
+                                    <th>City</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="toast-container position-fixed top-0 end-0 p-3">
+                <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <strong class="me-auto">Notification</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Your action has been completed successfully!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+        <script>
+            let editRowId = null;
+
+            document.getElementById("submitBtn").addEventListener("click", function () {
+                const fullName = document.getElementById("fullName").value.trim();
+                const email = document.getElementById("email").value.trim();
+                const salary = document.getElementById("salary").value.trim();
+                const city = document.getElementById("city").value.trim();
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                let valid = true;
+
+                clearValidationErrors();
+
+                if (!fullName || /\d/.test(fullName)) {
+                    document.getElementById("fullNameValidationError").classList.remove("hide");
+                    valid = false;
+                }
+
+                if (!email) {
+                    document.getElementById("emailValidationError").classList.remove("hide");
+                    valid = false;
+                } else if (!emailRegex.test(email)) {
+                    document.getElementById("emailValidationError").classList.remove("hide");
+                    valid = false;
+                }
+
+                if (!salary || isNaN(salary) || salary <= 0) {
+                    document.getElementById("salaryValidationError").classList.remove("hide");
+                    valid = false;
+                }
+
+                if (!city || /\d/.test(city)) {
+                    document.getElementById("cityValidationError").classList.remove("hide");
+                    valid = false;
+                }
+
+                if (!valid) {
+                    return;
+                }
+
+                const table = document.getElementById("tbody");
+                if (editRowId !== null) {
+                    const row = table.rows[editRowId];
+                    row.cells[0].innerText = fullName;
+                    row.cells[1].innerText = email;
+                    row.cells[2].innerText = salary;
+                    row.cells[3].innerText = city;
+                    editRowId = null;
+                    showToast("Updated successfully!");
+                } else {
+                    const newRow = table.insertRow();
+                    newRow.innerHTML = `
+                    <td>${fullName}</td>
+                    <td>${email}</td>
+                    <td>${salary}</td>
+                    <td>${city}</td>
+                    <td>
+                        <button class="btn btn-warning" onclick="editRow(this)">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteRow(this)">Delete</button>
+                    </td>
+                `;
+                    showToast("Added successfully!");
+                }
+
+                document.querySelector("form").reset();
+            });
+
+            function deleteRow(button) {
+                const row = button.parentNode.parentNode;
+                row.parentNode.removeChild(row);
+                showToast("Deleted successfully!");
+            }
+
+            function editRow(button) {
+                const row = button.parentNode.parentNode;
+                document.getElementById("fullName").value = row.cells[0].innerText;
+                document.getElementById("email").value = row.cells[1].innerText;
+                document.getElementById("salary").value = row.cells[2].innerText;
+                document.getElementById("city").value = row.cells[3].innerText;
+                editRowId = Array.from(row.parentNode.children).indexOf(row);
+            }
+
+            function showToast(message) {
+                const toastBody = document.querySelector('.toast-body');
+                toastBody.innerText = message;
+                const toast = new bootstrap.Toast(document.getElementById('liveToast'));
+                toast.show();
+            }
+
+            function clearValidationErrors() {
+                document.getElementById("fullNameValidationError").classList.add("hide");
+                document.getElementById("emailValidationError").classList.add("hide");
+                document.getElementById("salaryValidationError").classList.add("hide");
+                document.getElementById("cityValidationError").classList.add("hide");
+            }
+
+            function validateFullName() {
+                const fullName = document.getElementById("fullName").value;
+                const errorElement = document.getElementById("fullNameValidationError");
+                if (!fullName || /\d/.test(fullName)) {
+                    errorElement.classList.remove("hide");
+                } else {
+                    errorElement.classList.add("hide");
+                }
+            }
+
+            function validateCity() {
+                const city = document.getElementById("city").value;
+                const errorElement = document.getElementById("cityValidationError");
+                if (!city || /\d/.test(city)) {
+                    errorElement.classList.remove("hide");
+                } else {
+                    errorElement.classList.add("hide");
+                }
+            }
+
+            function validateEmail() {
+                const email = document.getElementById("email").value;
+                const errorElement = document.getElementById("emailValidationError");
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!email || !emailRegex.test(email)) {
+                    errorElement.classList.remove("hide");
+                } else {
+                    errorElement.classList.add("hide");
+                }
+            }
+
+            function validateSalary() {
+                const salary = document.getElementById("salary").value;
+                const errorElement = document.getElementById("salaryValidationError");
+                if (!salary || isNaN(salary) || salary <= 0) {
+                    errorElement.classList.remove("hide");
+                } else {
+                    errorElement.classList.add("hide");
+                }
+            }
+
+        </script>
+    </body>
+
+</html>
