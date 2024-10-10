@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <!-- ! post use give data to database -->
+
+        title: <input type="text" id="title"><br><br>
+        price: <input type="text" id="price"><br><br>
+        description: <input type="text" id="description"><br><br>
+        category: <input type="text" id="category"><br><br>
+        <button onclick="insertData()">Create</button>
+
+        <script>
+            function insertData() {
+                let title = document.getElementById('title').value;
+                let price = document.getElementById('price').value;
+                let description = document.getElementById('description').value;
+                let category = document.getElementById('category').value;
+
+                fetch('https://fakestoreapi.com/products', {
+                    method: "POST",
+                    body: JSON.stringify(
+                        {
+                            title: title,
+                            price: price,
+                            description: description,
+                            image: 'https://i.pravatar.cc',
+                            category: category
+                        }
+                    )
+                })
+                    .then(res => res.json())
+                    .then(json => console.log(json))
+            }
+
+
+        </script>
+    </body>
+
+</html>
