@@ -59,8 +59,8 @@
                                 <div class="card-body">
                                     <h5 class="card-title">${item.title}</h5>
                                     <p class="card-text">${item.description}</p>
-                                    <a href="${item.link}" class="btn btn-primary">View</a>
-                                    <a class="btn btn-warning text-white" onclick="editCard()">Edit</a>
+                                    <a class="btn btn-primary" data-id='${item.id}' onclick="viewDitail(this)">View</a>
+                                    <a class="btn btn-warning text-white" onclick="editCard(this)">Edit</a>
                                     <a data-id='${item.id}' class="btn btn-danger" onclick="deleteCard(this)">Delete</a>
                                 </div>
                             </div>`;
@@ -91,8 +91,13 @@
                     });
             }
 
+            function viewDitail(card) {
+                let id = card.dataset.id;
+                sessionStorage.setItem('itemID', id);
+                location.href = "view_data.html";
+            }
+
             function deleteCard(card) {
-                alert();
                 // console.log(card.dataset.id)
                 let id = card.dataset.id;
                 fetch(`https://api-crud-yrvv.onrender.com/api/tutorials/${id}`, {
@@ -119,7 +124,13 @@
                     });
             }
 
+            function editCard(card) {
+                
+            }
 
+            function updateInfo() {
+
+            }
 
         </script>
     </body>
